@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_funny/Data/questions.dart';
+import 'package:quiz_funny/answerButton.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -9,6 +12,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  final currentQuestion = questions[0];
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,14 +20,22 @@ class _QuestionScreenState extends State<QuestionScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'The questions....',
-            style: GoogleFonts.poppins(fontSize: 24, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              currentQuestion.text,
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
+            ),
           ),
           SizedBox(height: 16),
-          ElevatedButton(onPressed: () {}, child: Text('answer 1')),
-          ElevatedButton(onPressed: () {}, child: Text('answer 2')),
-          ElevatedButton(onPressed: () {}, child: Text('answer 3')),
+          // Answerbutton(answerText: currentQuestion.answer[0], onTap: () {}),
+          ...currentQuestion.answers.map((answer) {
+            return Answerbutton(answerText: answer, onTap: () {});
+          })
         ],
       ),
     );
