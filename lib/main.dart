@@ -11,6 +11,10 @@ import 'package:quiz_funny/quiz.dart';
 //   );
 // }
 
+// void main() {
+//   runApp(const Quiz());
+// }
+
 void main() {
   runApp(const Quiz());
 }
