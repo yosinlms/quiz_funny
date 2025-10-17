@@ -6,7 +6,6 @@ import 'package:quiz_funny/answerButton.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key, required this.onSelectAnswer});
-
   final void Function(String answer) onSelectAnswer;
 
   @override
@@ -14,20 +13,21 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  //untuk beritahu index dimulai dari 0
+  //untuk beritahu index pertanyaan dimulai dari 0
   var currentQuestionIndex = 0;
-
-  void answerQuestions(String selectedAnswer) {
-    widget.onSelectAnswer(selectedAnswer);
-    setState(() {
-      currentQuestionIndex++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     //sebagai variable pertanyaan sekarang
     final currentQuestion = questions[currentQuestionIndex];
+
+//fungsi untuk menjawab pertanyaan
+    void answerQuestion(String jawabanPilihan) {
+      widget.onSelectAnswer(jawabanPilihan);
+      setState(() {
+        currentQuestionIndex++;
+      });
+    }
 
     return Container(
       child: Padding(
@@ -36,28 +36,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              textAlign: TextAlign.center,
-              currentQuestion.text,
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-              ),
-            ),
+                textAlign: TextAlign.center,
+                currentQuestion.text,
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                )),
 
             SizedBox(height: 16),
             // Answerbutton(answerText: currentQuestion.answer[0], onTap: () {}),
-            ...currentQuestion.getShuffleAnswer().map((answer) {
-              return SizedBox(
-                width: double.infinity,
-                child: AnswerButton(
-                  answerText: answer,
-                  onTap: () {
-                    answerQuestions(answer);
-                  },
-                ),
-              );
-            })
+            ...currentQuestion.getShuffleList().map(
+              (answer) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: AnswerButton(
+                    answerText: answer,
+                    onTap: () {
+                      answerQuestion(answer);
+                    },
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
