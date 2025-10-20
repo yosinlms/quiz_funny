@@ -11,10 +11,10 @@ class Resultscreen extends StatelessWidget {
 
     for (var i = 0; i < jawabanTerpilih.length; i++) {
       summary.add({
-        'questions_index': i,
+        'questions_index': i, //index pertanyaan
         'questions': questions[0],
-        'correct_answer': questions[i].answers[0],
-        'user_answer': jawabanTerpilih[i]
+        'correct_answer': questions[i].answers[0], //jawaban benar
+        'user_answer': jawabanTerpilih, //jawaban dari user
       });
     }
     return summary;
@@ -24,26 +24,25 @@ class Resultscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-                textAlign: TextAlign.center,
-                'Anda telah menjawab 2 pertanyaan dari 10 pertanyaan dengan benar',
-                style: GoogleFonts.poppins(
-                    fontSize: 20, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 16),
-            Text(
-                textAlign: TextAlign.center,
-                'List dari jawaban',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                )),
-            const SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text('Restart Quiz'))
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                  'Anda telah menjawab 2 pertanyaan dari 10 pertanyaan dengan benar',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      fontSize: 18, fontWeight: FontWeight.w600)),
+              SizedBox(height: 16),
+              Text('List dari jawaban',
+                  style: GoogleFonts.poppins(
+                      fontSize: 16, fontWeight: FontWeight.w400)),
+              SizedBox(height: 16),
+              ElevatedButton(onPressed: () {}, child: Text('Restart Quiz'))
+            ],
+          ),
         ),
       ),
     );
