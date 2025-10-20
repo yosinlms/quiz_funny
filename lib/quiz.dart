@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_funny/Data/questions.dart';
 import 'package:quiz_funny/question_screen.dart';
+import 'package:quiz_funny/resultScreen.dart';
 import 'package:quiz_funny/start_screen.dart';
 
 class Quiz extends StatefulWidget {
@@ -13,6 +14,8 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   //lis kosong untuk jawaban yang dpilih
   List<String> selectedAnswer = [];
+
+  //default toggle layar
   var activeScreen = 'start-screen';
 
   //fungsi untuk mengubah layar start ke layar pertanyaan
@@ -22,14 +25,14 @@ class _QuizState extends State<Quiz> {
     });
   }
 
-//
+//fungsi untuk menyimpan jawaban
   void chooseAnswer(answer) {
     selectedAnswer.add(answer);
 
     setState(() {
       if (selectedAnswer.length == questions.length) {
         selectedAnswer = [];
-        activeScreen = 'start-screen';
+        activeScreen = 'result-screen';
       }
     });
   }
@@ -40,6 +43,10 @@ class _QuizState extends State<Quiz> {
 
     if (activeScreen == 'question-screen') {
       screenWideget = QuestionScreen(onSelectAnswer: chooseAnswer);
+    }
+
+    if (activeScreen == 'result-screen') {
+      screenWideget = Resultscreen(jawabanTerpilih: selectedAnswer);
     }
 
     return MaterialApp(
@@ -53,6 +60,7 @@ class _QuizState extends State<Quiz> {
               ],
             ),
           ),
+          // child: screenWideget,
           child: screenWideget,
         ),
       ),

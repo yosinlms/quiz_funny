@@ -19,11 +19,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     //sebagai variable pertanyaan sekarang
-    final currentQuestion = questions[currentQuestionIndex];
+    var currentQuestion = questions[currentQuestionIndex];
 
 //fungsi untuk menjawab pertanyaan
-    void answerQuestion(String jawabanPilihan) {
-      widget.onSelectAnswer(jawabanPilihan);
+    void answerQuestion(answer) {
+      widget.onSelectAnswer(answer);
       setState(() {
         currentQuestionIndex++;
       });
