@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_funny/Data/questions.dart';
+import 'package:quiz_funny/question_summary.dart';
 
 class Resultscreen extends StatelessWidget {
-  const Resultscreen({super.key, required this.jawabanTerpilih});
+  const Resultscreen(
+      {super.key, required this.jawabanTerpilih, required this.onRestart});
   final List<String> jawabanTerpilih;
-
-  List<Map<String, Object>> getSummaryData() {
-    final List<Map<String, Object>> summary = [];
-
-    for (var i = 0; i < jawabanTerpilih.length; i++) {
-      summary.add({
-        'questions_index': i, //index pertanyaan
-        'questions': questions[0],
-        'correct_answer': questions[i].answers[0], //jawaban benar
-        'user_answer': jawabanTerpilih, //jawaban dari user
-      });
-    }
-    return summary;
-  }
+  final void Function() onRestart;
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, Object>> getSummaryData() {
+      final List<Map<String, Object>> summary = [];
+
+      for (var i = 0; i < jawabanTerpilih.length; i++) {
+        summary.add({
+          'question_index': i, //index pertanyaan
+          'question': questions[i].text,
+          'correct_answer': questions[i].answers[0], //jawaban benar
+          'user_answer': jawabanTerpilih[i], //jawaban dari user
+        });
+      }
+      return summary;
+    }
+
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -36,11 +39,9 @@ class Resultscreen extends StatelessWidget {
                   style: GoogleFonts.poppins(
                       fontSize: 18, fontWeight: FontWeight.w600)),
               SizedBox(height: 16),
-              Text('List dari jawaban',
-                  style: GoogleFonts.poppins(
-                      fontSize: 16, fontWeight: FontWeight.w400)),
+              QuestionSummary(getSummaryData()),
               SizedBox(height: 16),
-              ElevatedButton(onPressed: () {}, child: Text('Restart Quiz'))
+              ElevatedButton(onPressed: onRestart, child: Text('Restart Quiz'))
             ],
           ),
         ),

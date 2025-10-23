@@ -28,12 +28,18 @@ class _QuizState extends State<Quiz> {
 //fungsi untuk menyimpan jawaban
   void chooseAnswer(answer) {
     selectedAnswer.add(answer);
-
     setState(() {
       if (selectedAnswer.length == questions.length) {
-        selectedAnswer = [];
         activeScreen = 'result-screen';
       }
+    });
+  }
+
+//untuk merestart setelah masuk result screen dan selesai quiz
+  void restartQuiz() {
+    setState(() {
+      selectedAnswer = [];
+      activeScreen = 'start-screen';
     });
   }
 
@@ -46,7 +52,10 @@ class _QuizState extends State<Quiz> {
     }
 
     if (activeScreen == 'result-screen') {
-      screenWideget = Resultscreen(jawabanTerpilih: selectedAnswer);
+      screenWideget =
+          Resultscreen(jawabanTerpilih: selectedAnswer, onRestart: restartQuiz
+              // onRestart: restartQuiz,
+              );
     }
 
     return MaterialApp(
